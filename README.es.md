@@ -35,7 +35,7 @@ Utilizamos nuestra propia `fuente` en los componente que quisieramos de la sigui
 
 ### 2. Next.JS - Estructura de Directorios 
 
-> - __Estructura de Carpeta Personalizada:__ </br>
+> - __ESTRUCTURA DE CARPETA PERSONALIZADA:__ </br>
 
 Dentro de la carpeta `/src`  creamos la carpeta `/components, /interfaces, /store`, la carpeta `/store` va a estar nuestro Gestor de Estado Zustand
 
@@ -45,7 +45,7 @@ Dentro de la carpeta `/components` creamos nuestro archivo barril `index.ts`
 
 Dentro de la carpeta `/ui` tendremos otra estructura de carpeta donde estará nuestras carpetas `/sidebar, /header, /footer`
 
-> - __Estructura de Carpeta Para Nuestras Rutas de Nuestra Paginas Iniciales:__ </br>
+> - __ESTRUCTURA DE CARPETA PARA NUESTRAS RUTAS INICIALES DEL LAYOUT:__ </br>
 
 Creando layaouts para nuestra (__Auth - Autentificación__) y otro para nuestro (__Shop - Dashboard administrativo ó E-Commerce__)
 
@@ -67,7 +67,7 @@ export default function RootLayout( { children }: Readonly<{
 }
 ````
 
-Dentor de la carpeta `/auth`, creamos la carpeta `/login, /new-account`, y cada carpeta con su archivo `page.tsx` correspondiente.
+Dentro de la carpeta `/auth`, creamos la carpeta `/login, /new-account`, y cada carpeta con su archivo `page.tsx` correspondiente.
 
 Movemos el archivo `/src/app/page.tsx` a la carpeta `/(shop)`
 
@@ -80,7 +80,43 @@ Con la estrutura de carpeta de nuestro `/app` contamos con las siguiente rutas:
 ***Layout para el E-Commerce***
 - [http://localhost:3000](http://localhost:3000) - Tenemos la ruta para el Inicio de la aplicacion
 
+> - __CREANDO RUTA DE LA APLICACION DEL E-COMMERCE:__ </br>
 
+Dentro de la carpeta `/(shop)`, creamos las carpetas `/admin, /cart, /category, /checkout, /empty, /orders, /product, /products`.
+
+Dentro de cada carpeta `/admin, /cart, /checkout, /empty, /orders, /products` creamos su archivo `page.tsx` correspondiente.
+
+Dentro de la carpeta `/category` creamos una carpeta `/[id]` y creamos el archivo `page.tsx`.
+
+Dentro de la carpeta `/checkout` creamos una carpeta `/address` y creamos el archivo `page.tsx`.
+
+Dentro de la carpeta `/orders` creamos una carpeta `/[id]` y creamos el archivo `page.tsx`.
+
+Dentro de la carpeta `/product` creamos una carpeta `/[slug]` y creamos el archivo `page.tsx`.
+
+Dentro de cada `page.tsx` copiamos el siguiente codigo:
+```tsx
+export default function() {
+  return (
+    <div>
+      <h1>Name Page</h1>
+    </div>
+  )
+}
+```
+
+***Rutas para el E-Commerce***
+- [http://localhost:3000/admin](http://localhost:3000/admin) - Es la pagina donde el administrador pueda crear productos, entre otras cosas.
+- [http://localhost:3000/cart](http://localhost:3000/cart) - Es la pagina del carrito de compra de la aplicacion.
+- [http://localhost:3000/category/id_abc](http://localhost:3000/category/id_abc) - Son las categorias que vamos a manejar como [Hombre, Mujeres y Niños]. Vamos a resivir argumento por la URL que seria el [id] de la categoria.
+- [http://localhost:3000/checkout](http://localhost:3000/checkout) - Es la pagina donde se va a realizar el cierre de la venta.
+- [http://localhost:3000/checkout/address](http://localhost:3000/checkout/address) - Es la información del usuario a donde le quiere llevar.
+- [http://localhost:3000/empty](http://localhost:3000/empty) - Es la pagina donde se va a redireccionar si el carrito de compra esta vacio.
+- [http://localhost:3000/orders](http://localhost:3000/orders) - Es la pagina donde se va a listar todas las oredenes.
+- [http://localhost:3000/orders/id-order](http://localhost:3000/orders/id-order) - Es la pagina donde vamos a ver una orden en particular.
+- [http://localhost:3000/product](http://localhost:3000/product) - Es la pagina donde se va a listar todas las oredenes.
+- [http://localhost:3000/product/product123](http://localhost:3000/product/product123) - Es la pagina donde se va a mostrar el productos, con un identificador unico humanamente legible. Y tambien controlar errores personalizados por páginas.
+- [http://localhost:3000/products](http://localhost:3000/products) - Es la pagina donde se va a listar los productos.
 
 ## Instalaciones Necesaria para el Funcionamiento
 
