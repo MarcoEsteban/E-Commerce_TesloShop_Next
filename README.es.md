@@ -35,19 +35,19 @@ Utilizamos nuestra propia `fuente` en los componente que quisieramos de la sigui
 
 ### 2. Next.JS - Estructura de Directorios 
 
-- __Estructura Personalizada:__ </br>
+> - __Estructura de Carpeta Personalizada:__ </br>
 
->Dentro de la carpeta `/src`  creamos la carpeta `/components, /interfaces, /store`, la carpeta `/store` va a estar nuestro Gestor de Estado Zustand
+Dentro de la carpeta `/src`  creamos la carpeta `/components, /interfaces, /store`, la carpeta `/store` va a estar nuestro Gestor de Estado Zustand
 
->Dentro de la carpeta `/components` creamos las siguientes carpetas `/cart, /product, /products, /ui`
+Dentro de la carpeta `/components` creamos las siguientes carpetas `/cart, /product, /products, /ui`
 
->Dentro de la carpeta `/components` creamos nuestro archivo barril `index.ts`
+Dentro de la carpeta `/components` creamos nuestro archivo barril `index.ts`
 
->Dentro de la carpeta `/ui` tendremos otra estructura de carpeta donde estará nuestras carpetas `/sidebar, /header, /footer`
+Dentro de la carpeta `/ui` tendremos otra estructura de carpeta donde estará nuestras carpetas `/sidebar, /header, /footer`
 
-- __Estructura de Carpeta Para Nuestras Rutas de Nuestra Paginas Iniciales:__ </br>
+> - __Estructura de Carpeta Para Nuestras Rutas de Nuestra Paginas Iniciales:__ </br>
 
-Creando layaouts para nuestra (__Auth__ - Autentificación) y otro para nuestro (__Shop__ - Dashboard administrativo ó E-Commerce)
+Creando layaouts para nuestra (__Auth - Autentificación__) y otro para nuestro (__Shop - Dashboard administrativo ó E-Commerce__)
 
 Dentro de la carpeta `/app` creamos la carpeta para la autenticación llamada `/auth`.
 
@@ -87,10 +87,4 @@ Con la estrutura de carpeta de nuestro `/app` contamos con las siguiente rutas:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
