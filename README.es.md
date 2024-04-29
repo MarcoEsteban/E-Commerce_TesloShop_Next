@@ -1,7 +1,10 @@
 # Proyecto de E-Commerce "TesloShop" - Realizado con Fernando Herrera
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<hr/>
 
-## Paso a Paso de la Construccion del Proyecto
+# Development
+Pasos para levantar la app en desarrollo
+
+# Paso a Paso de la Construccion del Proyecto
 
 ### 1. Next.JS - Fonts
 
@@ -118,9 +121,10 @@ export default function() {
 - [http://localhost:3000/product/product123](http://localhost:3000/product/product123) - Es la pagina donde se va a mostrar el productos, con un identificador unico humanamente legible. Y tambien controlar errores personalizados por páginas.
 - [http://localhost:3000/products](http://localhost:3000/products) - Es la pagina donde se va a listar los productos.
 
-## Instalaciones Necesaria para el Funcionamiento
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
+# Instalaciones Necesaria para el Funcionamiento
+### React Icons
+````
+npm i react-icons
+````
+- [React Icons ](https://react-icons.github.io/react-icons/) - Documentación
 
