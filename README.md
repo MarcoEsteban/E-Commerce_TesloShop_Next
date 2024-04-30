@@ -128,3 +128,16 @@ npm i react-icons
 ````
 - [React Icons ](https://react-icons.github.io/react-icons/) - Documentación
 
+### Zustand
+````
+npm i zustand
+````
+- [Zustand](https://zustand-demo.pmnd.rs/) - Documentación
+
+### CLSX
+````
+npm i clsx
+````
+- [CLSX](https://www.npmjs.com/package/clsx) - Documentación
+
+
