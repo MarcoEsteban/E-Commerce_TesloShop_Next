@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { initialData } from '@/seed/seed';
 import { titleFont } from '@/config/fonts';
+import { SizeSelector } from '@/components';
 
 interface Props {
   params: {
@@ -22,18 +23,22 @@ export default function ( { params }: Props ) {
     <div className="mt-5 mb-20 grid md:grid-cols-3 gap-3">
 
       {/* Slideshow of Imagen */}
-      <div className="col-span-1 md:grid-cols-2 bg-red-300">
+      <div className="col-span-1 md:col-span-2">
         hola
       </div>
 
       {/* Detalles */}
-      <div className="col-span-1 px-5 bg-blue-300">
+      <div className="col-span-1 px-5">
         <h1 className={ `${ titleFont.className } antialiased font-bold text-xl` }>
           { product.title }
         </h1>
         <p className="mb-5 text-lg">${ product.price }</p>
 
         {/* Selector de Tallas */}
+        <SizeSelector 
+          selectedSize={ product.sizes[0] } 
+          availableSizes={ product.sizes } 
+        />
 
         {/* Selector de Cantidad */}
 
