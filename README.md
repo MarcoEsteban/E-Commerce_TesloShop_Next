@@ -123,21 +123,31 @@ export default function() {
 
 # Instalaciones Necesaria para el Funcionamiento
 ### React Icons
+Para agregar iconos a nuestro E-Commerce.
 ````
 npm i react-icons
 ````
 - [React Icons ](https://react-icons.github.io/react-icons/) - Documentación
 
 ### Zustand
+Para gestionar nuestro estados globales de nuestro E-Commerce.
 ````
 npm i zustand
 ````
 - [Zustand](https://zustand-demo.pmnd.rs/) - Documentación
 
 ### CLSX
+Este Paquete Permite poner clases condicionales de Tailwind.
 ````
 npm i clsx
 ````
 - [CLSX](https://www.npmjs.com/package/clsx) - Documentación
+
+### Swiperjs
+Para hacer slide show a nuestra imagen e ir deslizando uno tras otro.
+````
+npm i swiper
+````
+- [Swiperjs](https://swiperjs.com/get-started) - Documentación
 
 

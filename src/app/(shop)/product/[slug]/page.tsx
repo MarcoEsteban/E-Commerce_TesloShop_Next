@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { initialData } from '@/seed/seed';
 import { titleFont } from '@/config/fonts';
-import { SizeSelector } from '@/components';
+import { ProductSlideShow, QuantitySelector, SizeSelector } from '@/components';
 
 interface Props {
   params: {
@@ -24,7 +24,10 @@ export default function ( { params }: Props ) {
 
       {/* Slideshow of Imagen */}
       <div className="col-span-1 md:col-span-2">
-        hola
+        <ProductSlideShow
+          title={ product.title }
+          images={ product.images }
+        />
       </div>
 
       {/* Detalles */}
@@ -41,6 +44,9 @@ export default function ( { params }: Props ) {
         />
 
         {/* Selector de Cantidad */}
+        <QuantitySelector 
+          quantity={ 4 } 
+        />
 
         {/* Button */}
         <button className="btn-primary my-5">
