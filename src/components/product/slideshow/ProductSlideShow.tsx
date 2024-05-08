@@ -25,7 +25,7 @@ export const ProductSlideShow = ( { images, title, className }: Props ) => {
   const [ thumbsSwiper, setThumbsSwiper ] = useState<SwiperObject>();
 
   return (
-    <>
+    <div className={ className }>
       {/* Slide de Images */}
       <Swiper
         // style={ {
@@ -81,6 +81,6 @@ export const ProductSlideShow = ( { images, title, className }: Props ) => {
           ) )
         }
       </Swiper>
-    </>
+    </div>
   );
 };
