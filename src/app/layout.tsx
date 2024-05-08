@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   description: "Una tienda virtual de productos",
 };
 
-export default function RootLayout( {
-  children,
-}: Readonly<{
+export default function RootLayout( { children }: Readonly<{
   children: React.ReactNode;
 }> ) {
   return (
