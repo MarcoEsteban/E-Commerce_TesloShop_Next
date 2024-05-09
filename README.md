@@ -1,8 +1,18 @@
-# Proyecto de E-Commerce "TesloShop" - Realizado con Fernando Herrera
-<hr/>
+# Proyecto de E-Commerce "TesloShop" - Realizando con Fernando Herrera
 
-# Development
+# Descripción
+
+# Correr en dev
 Pasos para levantar la app en desarrollo
+
+1. Clonar el repositorio
+2. Crear una copia del ```.env.template``` y renombrarlo a ```.env``` y cambiar las variables de entorno.
+3. Instalar dependencias ```npm install```
+4. Levantar la Base de Datos ```docker-compose up -d```
+5. Correr el proyecto ```npm run dev```
+
+# Correr en prod
+Pasos para generar la app en producción
 
 # Paso a Paso de la Construccion del Proyecto
 
@@ -121,7 +131,7 @@ export default function() {
 - [http://localhost:3000/product/product123](http://localhost:3000/product/product123) - Es la pagina donde se va a mostrar el productos, con un identificador unico humanamente legible. Y tambien controlar errores personalizados por páginas.
 - [http://localhost:3000/products](http://localhost:3000/products) - Es la pagina donde se va a listar los productos.
 
-# Instalaciones Necesaria para el Funcionamiento
+# Paquetes y Dependencias Utilizada en el Proyecto:
 ### React Icons
 Para agregar iconos a nuestro E-Commerce.
 ````
@@ -150,4 +160,12 @@ npm i swiper
 ````
 - [Swiperjs](https://swiperjs.com/get-started) - Documentación
 
+## Prisma 
+### Configuracion Paso a Paso: 
+1. Instalamos Prisma ```npm i prisma --save-dev```
+2. Inicializamos con la Base de Datos de nuestra preferencia ```PostgreSQL | MySQL | SQLite | SQLServer | MongoDB```
+3. Instalamos o Inicializamos con PostgreSQL como DB ```npx prisma init --datasource-provider PostgreSQL```
+
+- ```prisma db pull``` Permite crear el esquema(Schema | Tablas) acorde a la base de datos 
+- ```prisma generate``` Permite crear el cliente para poder realizar Query o Consulta a la base de datos
 
