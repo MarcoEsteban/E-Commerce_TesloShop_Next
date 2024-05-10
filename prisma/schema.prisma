@@ -12,3 +12,56 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// enum :: Son como los tipos de Datos que va a tener esa columna:
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
+
+enum Gender {
+  men
+  women
+  kid
+  unisex
+}
+
+model Category {
+  id      String    @id @default(uuid())
+  name    String    @unique
+  Product Product[] // Indico que estamos estableciendo la Relación
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  inStock     Int
+  price       Float    @default(0)
+  sizes       Size[]   @default([])
+  slug        String   @unique
+  tags        String[] @default([])
+  gender      Gender
+
+  // Relacion de Tablas de Producto con Categoria. Para que cada Producto tenga su Categoria.
+  category     Category       @relation(fields: [categoryId], references: [id]) // Indico que se va a enlazar el id de Category con el campo de categoryId de Product.
+  categoryId   String
+
+  ProductImage ProductImage[] // Indico que estamos estableciendo la Relación
+
+  @@index([gender])
+}
+
+model ProductImage {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  // Relacion de Tablas de ProductoImage con Product. Para que cada Producto tenga su Imagen.
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}

@@ -9,7 +9,9 @@ Pasos para levantar la app en desarrollo
 2. Crear una copia del ```.env.template``` y renombrarlo a ```.env``` y cambiar las variables de entorno.
 3. Instalar dependencias ```npm install```
 4. Levantar la Base de Datos ```docker-compose up -d```
-5. Correr el proyecto ```npm run dev```
+5. Correr el las migraciones de Prisma ```npx prisma migrate dev```
+6. Correr el proyecto ```npm run dev```
+
 
 # Correr en prod
 Pasos para generar la app en producción
@@ -166,6 +168,37 @@ npm i swiper
 2. Inicializamos con la Base de Datos de nuestra preferencia ```PostgreSQL | MySQL | SQLite | SQLServer | MongoDB```
 3. Instalamos o Inicializamos con PostgreSQL como DB ```npx prisma init --datasource-provider PostgreSQL```
 
-- ```prisma db pull``` Permite crear el esquema(Schema | Tablas) acorde a la base de datos 
-- ```prisma generate``` Permite crear el cliente para poder realizar Query o Consulta a la base de datos
+- ```prisma db pull``` Permite crear el esquema(Schema | Tablas) o modelo acorde a la base de datos que tengamos en nuestra DB.
+- ```prisma migrate``` Permite crear la Tabla a partir de un Schema o Model de Prisma.
+- ```prisma generate``` Permite crear el cliente para poder realizar Query o Consulta a la base de datos.
+
+4. Formas de crear las tablas ó schema en Prismas ya ser si Tenemos una __'DB ya creada'__ || __'Creamos la DB a partir de un Schema de Prisma'__:
+- __4.1 Primera Forma:__
+
+Creando la DB desde cero con Prisma a partir de un Modelo o Schema:
+```sql
+  # Schema o Modelo
+  model User {
+    id    Int     @id @default(autoincrement())
+    email String  @unique
+    name  String?
+  }
+```
+Entonces utilizamos ```npx prisma migrate dev --name nombreDeLaMigracion``` esto nos va a crear la tabla en la DB 
+y tambien luego podriasmo generara el cliente pero mayormente siempre crea pero por seguridad podriamos generar el cliente ```npx prisma generate```.
+
+- __4.2 Segunda Forma:__ 
+
+Puede que tengamos una consulta SQL o una tabla o varias tabla ya creada en nuestra DB:
+```sql
+  # Consulta SQL
+  CREATE TABLE empleados (
+    ID SERIAL PRIMARY KEY,
+    NOMBRE varchar(50),
+    PUESTO varchar(50),
+    SUELDO integer
+  );
+```
+Entonces utilizamos ```npx prisma db pull``` esto nos va a permitir crear un modelo acorde a nuestra tabla de nuestra DB. 
+
 
