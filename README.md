@@ -9,8 +9,9 @@ Pasos para levantar la app en desarrollo
 2. Crear una copia del ```.env.template``` y renombrarlo a ```.env``` y cambiar las variables de entorno.
 3. Instalar dependencias ```npm install```
 4. Levantar la Base de Datos ```docker-compose up -d```
-5. Correr el las migraciones de Prisma ```npx prisma migrate dev```
-6. Correr el proyecto ```npm run dev```
+5. Correr las migraciones de Prisma ```npx prisma migrate dev```
+6. Ejecutar el seed ```npm run seed```
+7. Correr el proyecto ```npm run dev```
 
 
 # Correr en prod
@@ -168,9 +169,10 @@ npm i swiper
 2. Inicializamos con la Base de Datos de nuestra preferencia ```PostgreSQL | MySQL | SQLite | SQLServer | MongoDB```
 3. Instalamos o Inicializamos con PostgreSQL como DB ```npx prisma init --datasource-provider PostgreSQL```
 
-- ```prisma db pull``` Permite crear el esquema(Schema | Tablas) o modelo acorde a la base de datos que tengamos en nuestra DB.
 - ```prisma migrate``` Permite crear la Tabla a partir de un Schema o Model de Prisma.
 - ```prisma generate``` Permite crear el cliente para poder realizar Query o Consulta a la base de datos.
+
+- ```prisma db pull``` Permite crear el esquema(Schema | Tablas) o modelo acorde a la base de datos que tengamos en nuestra DB.
 
 4. Formas de crear las tablas ó schema en Prismas ya ser si Tenemos una __'DB ya creada'__ || __'Creamos la DB a partir de un Schema de Prisma'__:
 - __4.1 Primera Forma:__
@@ -201,4 +203,41 @@ Puede que tengamos una consulta SQL o una tabla o varias tabla ya creada en nues
 ```
 Entonces utilizamos ```npx prisma db pull``` esto nos va a permitir crear un modelo acorde a nuestra tabla de nuestra DB. 
 
+### Configuracion Paso a Paso un Script o Creando una Semilla para la DB: 
 
+Creando un Script(Semilla)  que en modo __Produccion__ me cargue mi data.
+
+Creando un procedimiento, es decir una __pequeña aplicación__ totalmente ajena al proyecto de __Nextjs__, 
+simplemente creamos un __Script__  para luego ejecutarlo y cargar la DB
+
+1. Creanos un archivo en la ruta ```src/seed/```, llamada ```seed-database.ts```
+2. Crear una funcion anonima auto invocada:
+```ts
+  async function main() {
+
+
+    console.log('Seed Ejecutado correctamente')
+  }
+
+  // Funcion anonima auto invocada:
+  (() => {
+    main();
+  } ();)
+```
+3. Ahora hacemos la Instalación de una dependecia para ejecutar archivo __TypeScript__ porque __Node__ solo ejecuta archivo
+__JavaScript__, y esta dependencia permite ejecutar directamente archivo ```TypeScript``` en ```Node```.
+```zsh
+npm i -D ts-node
+```
+4. Creamos un ```Script ó Comando``` en el archivo ```package.json```  en la parte de ```scripts``` y colocar la siguiente linea:
+```json
+// seed :: es el nombre del comando.
+"seed": "ts-node src/seed/seed-database.ts"
+```
+5. Generamos un archivo ```tsconfig.json``` en la carpeta ```./src/seed``` para que el ```script``` corra correctamente, entonce generamos
+el archivo con el siguiente comando:
+```zsh
+// archivo de configuracion por defecto de TypeScript
+npx tsc --init
+```
+6. Y finalmente ejecutamos ```npm run seed```
