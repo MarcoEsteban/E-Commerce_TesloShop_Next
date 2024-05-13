@@ -205,7 +205,7 @@ Entonces utilizamos ```npx prisma db pull``` esto nos va a permitir crear un mod
 
 ### Configuracion Paso a Paso un Script o Creando una Semilla para la DB: 
 
-Creando un Script(Semilla)  que en modo __Produccion__ me cargue mi data.
+Creando un Script(Semilla) que en modo __Produccion__ me cargue mi data.
 
 Creando un procedimiento, es decir una __pequeña aplicación__ totalmente ajena al proyecto de __Nextjs__, 
 simplemente creamos un __Script__  para luego ejecutarlo y cargar la DB
@@ -241,3 +241,44 @@ el archivo con el siguiente comando:
 npx tsc --init
 ```
 6. Y finalmente ejecutamos ```npm run seed```
+
+### Borrando los datos de las Tablas de la DB:
+1. Creamos una carpeta y archivo llamada ```./lib/prisma.ts```, dentro de la ruta ```./src```
+2. Agregamos el siguiente codigo:
+```ts
+import {PrismaClient} from '@prisma/client'
+
+const prismaClientSingleton = () => {
+  return new PrismaClient
+}
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
+}
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+
+export default prisma
+
+if ( process.env.NODE_ENV !== 'production' ) globalForPrisma.prisma = prisma;
+
+```
+3. Dentro la funcion ```main() {}``` del archivo ```./src/seed/seed-database.ts``` agregamos el siguiente codigo: 
+```ts
+import prisma from '../lib/prisma';
+
+async function main() {
+
+  // 1. Borrar todos los datos de las Tablas | Borrar todos los Registros Previos de las Tablas
+  await Promise.all( [
+    prisma.productImage.deleteMany(),
+    prisma.product.deleteMany(),
+    prisma.category.deleteMany(),
+  ] );
+
+  console.log('Seed Ejecutado correctamente')
+}
+
+```
