@@ -1,5 +1,6 @@
 import { getPaginatedProductsWithImages } from '@/actions';
 import { ProductGrid, Title } from '@/components';
+import { redirect } from 'next/navigation';
 
 // Esta interfaz es para indicar lo que vamos a recibir por la URL:
 interface Props {
@@ -15,6 +16,9 @@ export default async function Home( { searchParams }: Props ) {
 
   // Llamamos al Server-Actions para listar los productos:
   const { products } = await getPaginatedProductsWithImages( { page } );
+
+  // Controlamos en caso de que no haya producto:
+  if ( products.length === 0 ) redirect('/');
 
   return (
     <>
