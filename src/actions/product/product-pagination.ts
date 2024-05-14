@@ -20,7 +20,10 @@ export const getPaginatedProductsWithImages = async ( {
 
   try {
 
-    // Obtenemos los productos de la DB:
+    // Utilizar una Promesa para ser mas Eficiente:
+    // await Promise.all([
+
+    // 1. Obtener los productos de la DB:
     const products = await prisma.product.findMany( {
       take: take,                // Indicamos el numero de articulos o de registro que nos mostrara desde la DB.
       skip: ( page - 1 ) * take, // Es lo que me va a permitir realizar la paginación, esto lo que nos va a permitir saltar de 4 en 4 o de acuerdo al take.
@@ -34,9 +37,16 @@ export const getPaginatedProductsWithImages = async ( {
       }
     } );
 
+    // 2. Obtener el total de Páginas
+    // Todo:
+    const totalCount = await prisma.product.count( {} );
+    const totalPages = Math.ceil( totalCount / take );
+
+    // ])
+
     return {
-      currentPage: 1,
-      totalPages: 10,
+      currentPage: page,
+      totalPages: totalPages,
       products: products.map( product => ( {
         ...product,                                            // Realizamos un (...rest) es decir el resto de los campos.
         images: product.ProductImage.map( image => image.url ) // Indico que agrege este campo mas a los productos.
