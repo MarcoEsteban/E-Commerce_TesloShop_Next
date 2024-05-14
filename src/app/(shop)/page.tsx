@@ -1,14 +1,20 @@
 import { getPaginatedProductsWithImages } from '@/actions';
 import { ProductGrid, Title } from '@/components';
-// import { initialData } from '@/seed/seed';
 
-// const products = initialData.products;
+// Esta interfaz es para indicar lo que vamos a recibir por la URL:
+interface Props {
+  searchParams: {
+    page?: string;
+  };
+}
 
-export default async function Home() {
+export default async function Home( { searchParams }: Props ) {
+
+  // Comprovamos si llega dato por la URL y lo Parseamos:
+  const page = searchParams.page ? parseInt( searchParams.page ) : 1;
 
   // Llamamos al Server-Actions para listar los productos:
-  const { products } = await getPaginatedProductsWithImages();
-  console.log(products)
+  const { products } = await getPaginatedProductsWithImages( { page } );
 
   return (
     <>

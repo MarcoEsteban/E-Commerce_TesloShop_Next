@@ -1,6 +1,7 @@
 
+// ? Son todos los campos que van a tener nuestro producto:
 export interface Product {
-  // todo: id: string;
+  id: string;
   description: string;
   images: string[];
   inStock: number;
