@@ -1,3 +1,5 @@
+export const revalidate = 60; // Va a revalidar los cambios cada 60 segundos.
+
 // import { notFound } from 'next/navigation';
 import { redirect } from 'next/navigation';
 
