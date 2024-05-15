@@ -16,7 +16,7 @@ interface Props {
   };
 }
 
-export default async function ( { params, searchParams }: Props ) {
+export default async function GenderByPage( { params, searchParams }: Props ) {
 
   const { gender } = params;
 
