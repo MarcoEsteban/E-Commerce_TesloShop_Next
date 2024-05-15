@@ -12,9 +12,6 @@ interface Props {
 
 export const Pagination = ( { totalPages }: Props ) => {
 
-  // --------------------------------
-  // Funcionamiento de la Paginación:
-  // --------------------------------
   const pathname = usePathname();                              // Ruta(URL) donde nos encontramos.
   const searchParams = useSearchParams();                      // Parametros que recivimos de la URL.
   const pageString = searchParams.get( 'page' ) ?? 1;          // Obtiene el valor del parámetro 'page' de la URL o usa 1 si no está presente.
