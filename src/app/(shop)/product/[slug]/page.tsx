@@ -1,7 +1,11 @@
+export const revalidate = 604800; // La pagina se actualizara cada 7 días si esq existe un cambio.
+
 import { notFound } from 'next/navigation';
-import { initialData } from '@/seed/seed';
+
 import { titleFont } from '@/config/fonts';
-import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector } from '@/components';
+import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from '@/components';
+import { getProductBySlug } from '@/actions';
+// import { initialData } from '@/seed/seed';
 
 interface Props {
   params: {
@@ -9,11 +13,12 @@ interface Props {
   };
 }
 
-export default function ProductBySlugPage( { params }: Props ) {
+export default async function ProductBySlugPage( { params }: Props ) {
 
   const { slug } = params;
-  // Buscamos el producto:
-  const product = initialData.products.find( product => product.slug === slug );
+
+  // Llamamos al Server-Actions para Buscar el Producto en la DB de acuerdo al 'Slug':
+  const product = await getProductBySlug( slug );
 
   if ( !product ) {
     notFound();
@@ -43,9 +48,13 @@ export default function ProductBySlugPage( { params }: Props ) {
 
       {/* Detalles */}
       <div className="col-span-1 px-5">
+
+        <StockLabel slug={ slug } />
+
         <h1 className={ `${ titleFont.className } antialiased font-bold text-xl` }>
           { product.title }
         </h1>
+
         <p className="mb-5 text-lg">${ product.price }</p>
 
         {/* Selector de Tallas */}
