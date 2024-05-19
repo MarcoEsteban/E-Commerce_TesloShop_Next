@@ -4,8 +4,13 @@ import { inter } from '@/config/fonts';
 import "./globals.css";
 
 
+// Utilizamos un comodin para agregar 'Teslo | Shop' a todas nuestra páginas:
 export const metadata: Metadata = {
-  title: "Teslo | Shop",
+  title: {
+    // %s :: Permite que el titulo de las otras páginas se muestre y acontinuacion se muestre 'Teslo | Shop'.
+    template: "%s - Teslo | Shop",
+    default: 'Home - Teslo | Shop'
+  },
   description: "Una tienda virtual de productos",
 };
 

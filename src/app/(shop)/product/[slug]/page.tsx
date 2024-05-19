@@ -1,15 +1,41 @@
 export const revalidate = 604800; // La pagina se actualizara cada 7 días si esq existe un cambio.
 
 import { notFound } from 'next/navigation';
+import { Metadata, ResolvingMetadata } from 'next';
 
 import { titleFont } from '@/config/fonts';
 import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from '@/components';
 import { getProductBySlug } from '@/actions';
-// import { initialData } from '@/seed/seed';
 
 interface Props {
   params: {
     slug: string;
+  };
+}
+
+// -----------------
+// Metadata Dynamic:
+// -----------------
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+
+  // Get the params of the URL:
+  const slug = params.slug;
+
+  // Obteniendo la Informacion de Producto con los Server-Actions desde la DB:
+  const product = await getProductBySlug( slug );
+
+  return {
+    title: product?.title ?? 'Producto no encontrado',
+    description: product?.description ?? '',
+    openGraph: { // Esto nos permite compartir la imagen por Facebook, Instagram, ...etc. y se comparta con la informacion.
+      title: product?.title ?? 'Producto no encontrado',
+      description: product?.description ?? '',
+      // images: [], // https://misitioweb.com/products/image.png
+      images: [ `/products/${ product?.images[ 1 ] }` ]
+    }
   };
 }
 
@@ -27,17 +53,17 @@ export default async function ProductBySlugPage( { params }: Props ) {
   return (
     <div className="mt-5 mb-20 grid md:grid-cols-3 gap-3">
 
-      {/* Slideshow of Imagen */}
+      {/* Slideshow of Imagen */ }
       <div className="col-span-1 md:col-span-2">
 
-        {/* Mobile SlideShow */}
+        {/* Mobile SlideShow */ }
         <ProductMobileSlideShow
           title={ product.title }
           images={ product.images }
           className="block md:hidden"
         />
 
-        {/* Desktop SlideShow */}
+        {/* Desktop SlideShow */ }
         <ProductSlideShow
           title={ product.title }
           images={ product.images }
@@ -46,7 +72,7 @@ export default async function ProductBySlugPage( { params }: Props ) {
 
       </div>
 
-      {/* Detalles */}
+      {/* Detalles */ }
       <div className="col-span-1 px-5">
 
         <StockLabel slug={ slug } />
@@ -57,23 +83,23 @@ export default async function ProductBySlugPage( { params }: Props ) {
 
         <p className="mb-5 text-lg">${ product.price }</p>
 
-        {/* Selector de Tallas */}
-        <SizeSelector 
-          selectedSize={ product.sizes[0] } 
-          availableSizes={ product.sizes } 
+        {/* Selector de Tallas */ }
+        <SizeSelector
+          selectedSize={ product.sizes[ 0 ] }
+          availableSizes={ product.sizes }
         />
 
-        {/* Selector de Cantidad */}
-        <QuantitySelector 
-          quantity={ 4 } 
+        {/* Selector de Cantidad */ }
+        <QuantitySelector
+          quantity={ 4 }
         />
 
-        {/* Button */}
+        {/* Button */ }
         <button className="btn-primary my-5">
           Agregar al cariito
         </button>
 
-        {/* Descripción */}
+        {/* Descripción */ }
         <h3 className="font-bold text-sm">Descripción</h3>
         <p className="font-light">
           { product.description }
