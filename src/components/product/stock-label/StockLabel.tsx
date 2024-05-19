@@ -11,24 +11,38 @@ interface Props {
 export const StockLabel = ( { slug }: Props ) => {
 
   const [ stock, setStock ] = useState( 0 );
-  const [ isLoading, setIsLoading ] = useState( '...Cargando' );
+  const [ isLoading, setIsLoading ] = useState( true );
 
   useEffect( () => {
     getStock();
   }, [] );
 
   const getStock = async () => {
-    // Llamamos al Server-Actions para obtener el Stock del Producto en la DB de acuerdo al 'Slug':
+    // Llamamos al Server-Actions para obtener el Stock del Producto de la DB de acuerdo al 'Slug':
     const inStock = await getStockBySlug( slug );
     setStock( inStock );
+    setIsLoading( false );
   };
 
 
 
   return (
-    <h1 className={ `${ titleFont.className } antialiased font-bold text-xl` }>
-      {/* Stock: { inStockProduct } */ }
-      stock: { stock }
-    </h1>
+    <>
+      {
+
+        isLoading
+          ? (
+            <h1 className={ `${ titleFont.className } antialiased font-bold text-xl animate-pulse bg-gray-200` }>
+              &nbsp;
+            </h1>
+          ) : (
+            <h1 className={ `${ titleFont.className } antialiased font-bold text-xl` }>
+              {/* Stock: { inStockProduct } */ }
+              stock: { stock }
+            </h1>
+          )
+
+      }
+    </>
   );
 };
