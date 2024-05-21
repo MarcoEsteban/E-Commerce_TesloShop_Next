@@ -6,6 +6,7 @@ import { Metadata, ResolvingMetadata } from 'next';
 import { titleFont } from '@/config/fonts';
 import { ProductMobileSlideShow, ProductSlideShow, QuantitySelector, SizeSelector, StockLabel } from '@/components';
 import { getProductBySlug } from '@/actions';
+import { AddToCart } from './ui/AddToCart';
 
 interface Props {
   params: {
@@ -18,26 +19,28 @@ interface Props {
 // -----------------
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata
+  // parent: ResolvingMetadata
 ): Promise<Metadata> {
-
   // Get the params of the URL:
   const slug = params.slug;
 
   // Obteniendo la Informacion de Producto con los Server-Actions desde la DB:
   const product = await getProductBySlug( slug );
 
+  // const previousImages = (await parent).openGraph?.images || []
+
   return {
     title: product?.title ?? 'Producto no encontrado',
     description: product?.description ?? '',
-    openGraph: { // Esto nos permite compartir la imagen por Facebook, Instagram, ...etc. y se comparta con la informacion.
+    openGraph: {
       title: product?.title ?? 'Producto no encontrado',
       description: product?.description ?? '',
       // images: [], // https://misitioweb.com/products/image.png
-      images: [ `/products/${ product?.images[ 1 ] }` ]
-    }
+      images: [ `products/${ product?.images[ 1 ] }` ]
+    },
   };
 }
+
 
 export default async function ProductBySlugPage( { params }: Props ) {
 
@@ -83,21 +86,8 @@ export default async function ProductBySlugPage( { params }: Props ) {
 
         <p className="mb-5 text-lg">${ product.price }</p>
 
-        {/* Selector de Tallas */ }
-        <SizeSelector
-          selectedSize={ product.sizes[ 0 ] }
-          availableSizes={ product.sizes }
-        />
-
-        {/* Selector de Cantidad */ }
-        <QuantitySelector
-          quantity={ 4 }
-        />
-
-        {/* Button */ }
-        <button className="btn-primary my-5">
-          Agregar al cariito
-        </button>
+        {/* Agregando desde un Client-Side-Rendering */ }
+        <AddToCart product={ product } />
 
         {/* Descripción */ }
         <h3 className="font-bold text-sm">Descripción</h3>
