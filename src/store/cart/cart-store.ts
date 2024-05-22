@@ -8,6 +8,7 @@ interface State {
   cart: CartProduct[];
 
   // Action:
+  getTotalItem: () => number;
   addProductToCart: ( product: CartProduct ) => void;
   // updateProductQuantity: () => void;
   // removeProduct: () => void;
@@ -27,9 +28,15 @@ export const useCartStore = create<State>()(
       cart: [],
 
       // Metodos ó Actions:
-      addProductToCart: ( product: CartProduct ) => {
+      getTotalItem: () => {
+        // Destructuracion para obtener el cart:
+        const { cart } = get();
+        // reduce( funtion_que_retorna_el_new_value, value_initial)
+        return cart.reduce( ( value_initial, itemCart ) => value_initial + itemCart.quantity, 0 );
+      },
 
-        // Destructuracion:
+      addProductToCart: ( product: CartProduct ) => {
+        // Destructuracion para obtener el cart:
         const { cart } = get();
         console.log( cart );
 
@@ -58,11 +65,10 @@ export const useCartStore = create<State>()(
         set( { cart: updateCartProducts } );
 
       }
-
     }),
     {
       name: 'shopping-cart', // Nombre del LocalStorage.
-      skipHydration: true, //? 1ra Forma de Solucionar el Problema de la Rehidratacion.
+      // skipHydration: true, //? 1ra Forma de Solucionar el Problema de la Rehidratacion.
     }
   )
 

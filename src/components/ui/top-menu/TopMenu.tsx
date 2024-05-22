@@ -1,14 +1,25 @@
-'use client'
+'use client';
 
 import { titleFont } from '@/config/fonts';
-import { useUIStore } from '@/store';
+import { useCartStore, useUIStore } from '@/store';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { IoCartOutline, IoSearchOutline } from 'react-icons/io5';
 
 export const TopMenu = () => {
 
   // Utilizando Zustand:
   const openSideMenu = useUIStore( state => state.openSideMenu );
+  const getTotalItem = useCartStore( state => state.getTotalItem() );
+
+  // Solucionando el Problema de la Rehidratacion:
+  const [ loaded, setLoaded ] = useState( false );
+
+  // Permita que el Servidor y el Cliente Renderize lo mismo
+  useEffect( () => {
+    setLoaded( true );
+  }, [] );
+
 
   return (
     <nav className="flex px-5 justify-between items-center w-full">
@@ -40,7 +51,13 @@ export const TopMenu = () => {
 
         <Link href="/cart" className="mx-2">
           <div className="relative">
-            <span className="absolute -top-2 -right-2 px-1 text-xs rounded-full font-bold bg-blue-700 text-white">3</span>
+            {
+              (loaded &&  getTotalItem > 0) && (
+                <span className="absolute -top-2 -right-2 px-1 text-xs rounded-full font-bold bg-blue-700 text-white">
+                  { getTotalItem }
+                </span>
+              )
+            }
             <IoCartOutline className="w-5 h-5" />
           </div>
         </Link>
