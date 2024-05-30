@@ -9,6 +9,13 @@ interface State {
 
   // Action:
   getTotalItem: () => number;
+  getSummaryInformation: () => {
+    subsTotal: number;
+    impuesto: number;
+    total: number;
+    itemsInCart: number;
+  };
+
   addProductToCart: ( product: CartProduct ) => void;
   updateProductQuantity: ( product: CartProduct, quantity: number ) => void;
   removeProduct: ( product: CartProduct ) => void;
@@ -35,10 +42,27 @@ export const useCartStore = create<State>()(
         return cart.reduce( ( value_initial, itemCart ) => value_initial + itemCart.quantity, 0 );
       },
 
+      getSummaryInformation: () => {
+        const { cart, getTotalItem } = get();
+
+        const subsTotal = cart.reduce(
+          ( subTotal, product ) => ( product.quantity * product.price ) + subTotal,
+          0
+        );
+
+        const impuesto = subsTotal * 0.15;
+        const total = subsTotal + impuesto;
+        const itemsInCart = getTotalItem();
+
+        return {
+          subsTotal, impuesto, total, itemsInCart
+        };
+
+      },
+
       addProductToCart: ( product: CartProduct ) => {
         // Destructuracion para obtener el cart:
         const { cart } = get();
-        console.log( cart );
 
         //? 1. Revisar si el producto existe en el carrito con la talla seleccionada. 
         // .some() :: Determina que basta que uno cumpla la condicion que especifiquemos sale de la funcion.
