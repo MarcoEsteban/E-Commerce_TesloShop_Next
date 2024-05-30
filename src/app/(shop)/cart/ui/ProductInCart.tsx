@@ -11,6 +11,7 @@ export const ProductInCart = () => {
   // Zustand
   const productsInCart = useCartStore( state => state.cart );
   const updateProductQuantity = useCartStore( state => state.updateProductQuantity );
+  const removeProduct = useCartStore( state => state.removeProduct );
 
   // React
   const [ loaded, setLoaded ] = useState( false );
@@ -37,7 +38,7 @@ export const ProductInCart = () => {
             />
 
             <div>
-              <Link 
+              <Link
                 className="hover:underline cursor-pointer"
                 href={ `/product/${ product.slug }` }>
                 { product.size } - { product.title }
@@ -47,7 +48,9 @@ export const ProductInCart = () => {
                 quantity={ product.quantity }
                 onQuantityChanged={ ( quantity => updateProductQuantity( product, quantity ) ) }
               />
-              <button className="underline">Remover</button>
+              <button
+                onClick={ () => removeProduct( product ) }
+                className="underline">Remover</button>
             </div>
           </div>
         ) )

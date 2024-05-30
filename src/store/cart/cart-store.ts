@@ -11,7 +11,7 @@ interface State {
   getTotalItem: () => number;
   addProductToCart: ( product: CartProduct ) => void;
   updateProductQuantity: ( product: CartProduct, quantity: number ) => void;
-  // removeProduct: () => void;
+  removeProduct: ( product: CartProduct ) => void;
 
 }
 
@@ -78,6 +78,17 @@ export const useCartStore = create<State>()(
         } );
 
         set( { cart: updateCartProducts } );
+      },
+
+      removeProduct: ( product: CartProduct ) => {
+        const { cart } = get();
+
+        // Indico que me devuelva todo el carrito de compras, pero ecepto el producto que cumpla esta condición.
+        const updateCartProducts = cart.filter(
+          ( item ) => item.id !== product.id || item.size !== product.size
+        );
+
+        set( { cart: updateCartProducts } );
       }
 
     } ),
@@ -86,5 +97,4 @@ export const useCartStore = create<State>()(
       // skipHydration: true, //? 1ra Forma de Solucionar el Problema de la Rehidratacion.
     }
   )
-
 );
