@@ -10,7 +10,7 @@ interface State {
   // Action:
   getTotalItem: () => number;
   addProductToCart: ( product: CartProduct ) => void;
-  // updateProductQuantity: () => void;
+  updateProductQuantity: ( product: CartProduct, quantity: number ) => void;
   // removeProduct: () => void;
 
 }
@@ -63,9 +63,24 @@ export const useCartStore = create<State>()(
         } );
 
         set( { cart: updateCartProducts } );
+      },
 
+      updateProductQuantity: ( product: CartProduct, quantity: number ) => {
+        const { cart } = get();
+
+        // Actualiza el carrito de compra cuando hace clicp al button + ó -
+        const updateCartProducts = cart.map( item => {
+          if ( item.id === product.id && item.size === product.size ) {
+            return { ...item, quantity: quantity };
+          }
+
+          return item;
+        } );
+
+        set( { cart: updateCartProducts } );
       }
-    }),
+
+    } ),
     {
       name: 'shopping-cart', // Nombre del LocalStorage.
       // skipHydration: true, //? 1ra Forma de Solucionar el Problema de la Rehidratacion.
