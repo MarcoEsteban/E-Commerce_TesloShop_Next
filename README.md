@@ -164,7 +164,7 @@ npm i swiper
 - [Swiperjs](https://swiperjs.com/get-started) - Documentación
 
 ## Prisma 
-### Configuracion Paso a Paso: 
+- ### Configuracion Paso a Paso: 
 1. Instalamos Prisma ```npm i prisma --save-dev```
 2. Inicializamos con la Base de Datos de nuestra preferencia ```PostgreSQL | MySQL | SQLite | SQLServer | MongoDB```
 3. Instalamos o Inicializamos con PostgreSQL como DB ```npx prisma init --datasource-provider PostgreSQL```
@@ -178,7 +178,7 @@ npm i swiper
 - __4.1 Primera Forma:__
 
 Creando la DB desde cero con Prisma a partir de un Modelo o Schema:
-```sql
+```ts
   # Schema o Modelo
   model User {
     id    Int     @id @default(autoincrement())
@@ -187,7 +187,7 @@ Creando la DB desde cero con Prisma a partir de un Modelo o Schema:
   }
 ```
 Entonces utilizamos ```npx prisma migrate dev --name nombreDeLaMigracion``` esto nos va a crear la tabla en la DB 
-y tambien luego podriasmo generara el cliente pero mayormente siempre crea pero por seguridad podriamos generar el cliente ```npx prisma generate```.
+y tambien luego podriasmo generara el cliente, pero mayormente siempre crea, pero por seguridad podriamos generar el cliente ```npx prisma generate```.
 
 - __4.2 Segunda Forma:__ 
 
@@ -203,9 +203,9 @@ Puede que tengamos una consulta SQL o una tabla o varias tabla ya creada en nues
 ```
 Entonces utilizamos ```npx prisma db pull``` esto nos va a permitir crear un modelo acorde a nuestra tabla de nuestra DB. 
 
-### Configuracion Paso a Paso un Script o Creando una Semilla para la DB: 
+- ### Configuracion Paso a Paso de un Script o Creando una Semilla para la DB: 
 
-Creando un Script(Semilla) que en modo __Produccion__ me cargue mi data.
+Creando un Script(Semilla) que en modo __Produccion__ me cargue mi data en la DB.
 
 Creando un procedimiento, es decir una __pequeña aplicación__ totalmente ajena al proyecto de __Nextjs__, 
 simplemente creamos un __Script__  para luego ejecutarlo y cargar la DB
@@ -242,7 +242,7 @@ npx tsc --init
 ```
 6. Y finalmente ejecutamos ```npm run seed```
 
-### Borrando los datos de las Tablas de la DB:
+- ### Borrando los datos de las Tablas de la DB:
 1. Creamos una carpeta y archivo llamada ```./lib/prisma.ts```, dentro de la ruta ```./src```
 2. Agregamos el siguiente codigo:
 ```ts
@@ -280,5 +280,42 @@ async function main() {
 
   console.log('Seed Ejecutado correctamente')
 }
+```
 
+## NextAuth
+- ### Instalacion para el funcionamiento:
+
+1. Instalar NextAuth sin el ```@beta```:
+```bash
+npm install next-auth
+```
+2. Instalar NextAuth con el ```@beta``` esto nos va a permitir instalar la version '5' o superior, y esta version es la que necesitamos para el proyecto:
+```bash
+npm install next-auth@beta
+```
+3. Creando nuestra variable de entorno y tener una semilla unica en nuestro NextAuth 
+```bash
+openssl rand -base64 32
+```
+4. La variable de entorno que nos genere copiarlo y guardarlo en nuestro archivo ```.env``` de la siguiente forma:
+```.env
+AUTH_SECRET="llave-secreta"
+```
+- [NextAuth](https://authjs.dev/reference/nextjs) - Documentación de Next-Auth
+- [Next](https://nextjs.org/learn/dashboard-app/adding-authentication) - Documentación de Next de como usar y configurar NextAuth
+
+
+- ### Configuración Básica Paso a Paso:
+
+1.  Creamos un archivo llamado ```auth.config.ts``` dentro de la carpeta ```/src```, y copiamos el siguiente codigo:
+```ts
+import type { NextAuthConfig } from 'next-auth';
+ 
+export const authConfig: NextAuthConfig = {
+  pages: {
+    signIn: '/auth/login',
+    newUser: '/auth/new-account',
+  },
+  providers: [], // Dentro va la configuracion de [Google, GitHub, Nuestra_Propia_Autenticacion ...]
+};
 ```
