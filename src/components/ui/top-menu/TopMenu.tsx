@@ -5,6 +5,7 @@ import { useCartStore, useUIStore } from '@/store';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { IoCartOutline, IoSearchOutline } from 'react-icons/io5';
+import { ItemCard } from '../../../../../03-admin-todos/src/shopping-cart/components/ItemCard';
 
 export const TopMenu = () => {
 
@@ -49,11 +50,18 @@ export const TopMenu = () => {
           <IoSearchOutline className="w-5 h-5" />
         </Link>
 
-        <Link href="/cart" className="mx-2">
+        <Link 
+          href={
+            ( (getTotalItem === 0) && loaded)
+              ? '/empty'
+              : '/cart'
+          } 
+          className="mx-2"
+        >
           <div className="relative">
             {
               (loaded &&  getTotalItem > 0) && (
-                <span className="absolute -top-2 -right-2 px-1 text-xs rounded-full font-bold bg-blue-700 text-white">
+                <span className="fade-in absolute -top-2 -right-2 px-1 text-xs rounded-full font-bold bg-blue-700 text-white">
                   { getTotalItem }
                 </span>
               )
