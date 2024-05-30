@@ -163,6 +163,13 @@ npm i swiper
 ````
 - [Swiperjs](https://swiperjs.com/get-started) - Documentación
 
+### Zod
+Para validar las credenciales de los formularios
+````
+npm i zod
+````
+- [Zod](https://zod.dev/) - Documentación
+
 ## Prisma 
 - ### Configuracion Paso a Paso: 
 1. Instalamos Prisma ```npm i prisma --save-dev```
