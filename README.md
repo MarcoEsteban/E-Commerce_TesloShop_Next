@@ -170,6 +170,14 @@ npm i zod
 ````
 - [Zod](https://zod.dev/) - Documentación
 
+### bcryptjs
+Para emcriptar el password
+````
+npm i bcryptjs
+npm i @types/bcryptjs -D
+````
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) - Documentación
+
 ## Prisma 
 - ### Configuracion Paso a Paso: 
 1. Instalamos Prisma ```npm i prisma --save-dev```

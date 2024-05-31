@@ -8,16 +8,17 @@ async function main() {
   // 1. Borrar todos los datos de las Tablas | Borrar todos los Registros Previos
   // ----------------------------------------------------------------------------
   // await Promise.all( [
-    await prisma.productImage.deleteMany();
-    await prisma.product.deleteMany();
-    await prisma.category.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.productImage.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.category.deleteMany();
   // ] );
 
   // --------------------------------------------------
   // 2. Insertando los Registros a la Tabla de Category
   // --------------------------------------------------
   // Obteniendo las categorias y productos del Seed:
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
 
   // Recorremos las categorias del 'seed' para obtener los nombres: [{name: 'shirts'}, ...etc]
   const categoriesData = categories.map( ( name ) => ( { name } ) );
@@ -30,7 +31,7 @@ async function main() {
   // Obteniendo las categorias de la DB:
   const categoriesDB = await prisma.category.findMany();
 
-  // Recorremos la categoria de la DB para cabiar el formato de retorno: { name: 'id'} == {shirts: '9c73675c-aba0-441a-9505-ab3d48572943'}
+  // Recorremos la categoria de la DB para cambiar el formato de retorno: { name: 'id'} == {shirts: '9c73675c-aba0-441a-9505-ab3d48572943'}
   const categoriesMap = categoriesDB.reduce( ( map, category ) => {
 
     // map :: El map es igual al objeto vacio, que al final tiene { llave: valor } === { name: 'id'}
@@ -65,6 +66,14 @@ async function main() {
     } );
 
   } );
+
+  // ----------------------------------------------------------------
+  // 4. Insertando los Registros a la Tabla de User
+  // ----------------------------------------------------------------
+  await prisma.user.createMany( {
+    data: users
+  } );
+
 
   console.log( 'Seed Ejecutado correctamente' );
 }
