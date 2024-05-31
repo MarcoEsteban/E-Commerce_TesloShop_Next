@@ -31,10 +31,15 @@ enum Gender {
   unisex
 }
 
+enum Role {
+  admin
+  user
+}
+
 model Category {
   id      String    @id @default(uuid())
   name    String    @unique
-  Product Product[] // Indico que estamos estableciendo la Relación
+  Product Product[] // Indico que estamos estableciendo la Relación de One to Many
 }
 
 model Product {
@@ -49,10 +54,10 @@ model Product {
   gender      Gender
 
   // Relacion de Tablas de Producto con Categoria. Para que cada Producto tenga su Categoria.
-  category     Category       @relation(fields: [categoryId], references: [id]) // Indico que se va a enlazar el id de Category con el campo de categoryId de Product.
-  categoryId   String
+  category   Category @relation(fields: [categoryId], references: [id]) // Indico que se va a enlazar el id de Category con el campo de categoryId de Product.
+  categoryId String
 
-  ProductImage ProductImage[] // Indico que estamos estableciendo la Relación
+  ProductImage ProductImage[] // Indico que estamos estableciendo la Relación de One to Many
 
   @@index([gender])
 }
@@ -64,4 +69,14 @@ model ProductImage {
   // Relacion de Tablas de ProductoImage con Product. Para que cada Producto tenga su Imagen.
   product   Product @relation(fields: [productId], references: [id])
   productId String
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  role          Role      @default(user)
+  image         String? //Indico que puede ser opcional.
 }
