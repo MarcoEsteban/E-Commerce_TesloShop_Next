@@ -1,8 +1,10 @@
 'use client';
 
 import { authenticate } from '@/actions';
+import clsx from 'clsx';
 import Link from 'next/link';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
+import { IoInformationOutline } from 'react-icons/io5';
 
 export const LoginForm = () => {
 
@@ -12,6 +14,20 @@ export const LoginForm = () => {
 
   return (
     <form action={ dispatch } className="flex flex-col">
+
+      {/* Muestra el Error de Credencial Incorrecta */ }
+      <div
+        className="flex h-8 items-end space-x-1"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        { state && (
+          <div className="flex my-2">
+            <IoInformationOutline className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">Credenciales incorrectas</p>
+          </div>
+        ) }
+      </div>
 
       <label htmlFor="email">Correo electrónico</label>
       <input
@@ -26,12 +42,7 @@ export const LoginForm = () => {
         name="password"
         type="password" />
 
-      <button
-        type='submit'
-        className="btn-primary">
-        Ingresar
-      </button>
-
+      <LoginButton />
 
       {/* divisor line */ }
       <div className="flex items-center my-5">
@@ -49,3 +60,20 @@ export const LoginForm = () => {
     </form>
   );
 };
+
+function LoginButton() {
+  const { pending } = useFormStatus(); //Permite mostrar el estado del button.
+
+  return (
+    <button
+      type='submit'
+      className={ clsx( {
+        "btn-primary": !pending, //False si no hicieron click al button para enviar el formulario.
+        "btn-disable": pending, //True si hicieron click al button para enviar el formulario.
+      } ) }
+      disabled={ pending }
+    >
+      Ingresar
+    </button>
+  );
+}
