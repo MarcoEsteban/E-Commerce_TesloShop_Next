@@ -5,10 +5,30 @@ import { z } from 'zod';
 import bcryptjs from 'bcryptjs';
 
 export const authConfig: NextAuthConfig = {
+
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account',
   },
+
+  callbacks: {
+
+    jwt( { token, user } ) {
+      if ( user ) {
+        // Si existe el user lo  agregamos dentro de nuestro Token. 
+        token.data = user;
+      }
+
+      return token;
+    },
+
+    session( { session, token, user } ) {
+      session.user = token.data as any;
+      return session;
+    }
+
+  },
+
   providers: [ // Dentro va la configuracion de [Google, GitHub, Nuestra_Propia_Autenticacion ...]
     Credentials( {
       async authorize( credentials ) {
