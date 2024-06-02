@@ -1,5 +1,6 @@
 // Auth/Login
-export * from './auth/login'
+export * from './auth/login';
+export * from './auth/logout';
 
 // Product
 export * from './product/product-pagination';

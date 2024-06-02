@@ -9,7 +9,9 @@ export default async function AuthLayout( { children }: {
   // Auth : Nos sirve como Middleware y Como Session.
   const session = await auth();
 
-  if ( session?.user ) return redirect( '/' );
+  if ( session?.user ) {
+    redirect( '/' );
+  }
 
   console.log( { session } );
 
