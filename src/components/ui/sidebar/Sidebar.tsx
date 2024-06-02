@@ -18,13 +18,12 @@ export const Sidebar = () => {
   // Hook de React: Session del lado del Cliente.
   // NOTA :: Esta sesion no va a funcionar igual que la sesion de NextAut, porque esta sesion debe estar envuelta dentro de un <SessionProvider></SessionProvider>
   const { data: session } = useSession(); // <-- Esta session es igual a const session = await auth();
-
-  console.log( { session } );
+  const isAuthenticated = !!session?.user; // Convertimos a un boolean con la doble negacion '!!'.
 
   return (
     <div>
 
-      {/* Background Black */ }
+      {/********************************* Background Black *********************************/ }
       {
         isSideMenuOpen && (
           <div
@@ -33,7 +32,7 @@ export const Sidebar = () => {
         )
       }
 
-      {/* Blur */ }
+      {/************************************** Blur ****************************************/ }
       {
         isSideMenuOpen && (
           <div
@@ -43,7 +42,7 @@ export const Sidebar = () => {
         )
       }
 
-      {/* Sidemenu */ }
+      {/************************************ Sidemenu *************************************/ }
       <nav
         className={
           /* Este Paquete Permite poner clases condicionales de Tailwind */
@@ -55,14 +54,14 @@ export const Sidebar = () => {
           )
         }>
 
-        {/* Icon Slide */ }
+        {/************************* Icon Slide - Button Cerrar Menu ***********************/ }
         <IoCloseOutline
           size={ 50 }
           className="absolute top-5 right-5 cursor-pointer"
-          onClick={ closeSideMenu }
+          onClick={ () => closeSideMenu() }
         />
 
-        {/* Input Search */ }
+        {/********************************** Input Search *********************************/ }
         <div className="relative mt-14">
           <IoSearchOutline size={ 20 } className="absolute top-2 left-2" />
           <input
@@ -72,7 +71,7 @@ export const Sidebar = () => {
           />
         </div>
 
-        {/* Menú */ }
+        {/********************************* Menú de Usuarios ********************************/ }
         <Link
           href="/profile"
           onClick={ closeSideMenu }
@@ -90,27 +89,37 @@ export const Sidebar = () => {
           <span className="ml-3 text-xl">Ordenes</span>
         </Link>
 
-        <Link
-          href="/auth/login"
-          onClick={ closeSideMenu }
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
-          <IoLogInOutline size={ 30 } />
-          <span className="ml-3 text-xl">Ingresar</span>
-        </Link>
+        {
+          // Si NO esta Autenticado mostrar el Button de Ingresar.
+          !isAuthenticated && (
+            <Link
+              href="/auth/login"
+              onClick={ closeSideMenu }
+              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            >
+              <IoLogInOutline size={ 30 } />
+              <span className="ml-3 text-xl">Ingresar</span>
+            </Link>
+          )
+        }
 
-
-        <button
-          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={ () => logout() }
-        >
-          <IoLogOutOutline size={ 30 } />
-          <span className="ml-3 text-xl">Salir</span>
-        </button>
+        {
+          // Si esta Autenticado mostrar el Button de Salir.
+          isAuthenticated && (
+            <button
+              className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={ () => logout() }
+            >
+              <IoLogOutOutline size={ 30 } />
+              <span className="ml-3 text-xl">Salir</span>
+            </button>
+          )
+        }
 
         {/* Line Separator */ }
         <div className="w-full h-px bg-gray-200 my-10" />
 
+        {/********************************* Menú Administrativo ******************************/ }
         <Link
           href="/"
           className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
