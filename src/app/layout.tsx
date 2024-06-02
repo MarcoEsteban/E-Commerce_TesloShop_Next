@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { inter } from '@/config/fonts';
 
 import "./globals.css";
+import { Provider } from '@/components';
 
 
 // Utilizamos un comodin para agregar 'Teslo | Shop' a todas nuestra páginas:
@@ -19,7 +20,12 @@ export default function RootLayout( { children }: Readonly<{
 }> ) {
   return (
     <html lang="en">
-      <body className={ inter.className }>{ children }</body>
+      <body className={ inter.className }>
+        {/* Usamos el Provider para utilizar useSession() del lado del Cliente */}
+        <Provider>
+          { children }
+        </Provider>
+      </body>
     </html>
   );
 }

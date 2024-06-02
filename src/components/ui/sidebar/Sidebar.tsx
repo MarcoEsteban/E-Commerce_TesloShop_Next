@@ -1,16 +1,25 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+
+import clsx from 'clsx';
+import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from 'react-icons/io5';
+
 import { logout } from '@/actions';
 import { useUIStore } from '@/store';
-import clsx from 'clsx';
-import Link from 'next/link';
-import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPersonOutline, IoSearchOutline, IoShirtOutline, IoTicketOutline } from 'react-icons/io5';
 
 export const Sidebar = () => {
 
   // Utilizando Zustand:
   const isSideMenuOpen = useUIStore( state => state.isSideMenuOpen );
   const closeSideMenu = useUIStore( state => state.closeSideMenu );
+
+  // Hook de React: Session del lado del Cliente.
+  // NOTA :: Esta sesion no va a funcionar igual que la sesion de NextAut, porque esta sesion debe estar envuelta dentro de un <SessionProvider></SessionProvider>
+  const { data: session } = useSession(); // <-- Esta session es igual a const session = await auth();
+
+  console.log( { session } );
 
   return (
     <div>

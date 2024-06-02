@@ -43,7 +43,8 @@ export const authConfig: NextAuthConfig = {
   ],
 };
 
-export const { signIn, signOut, auth } = NextAuth( authConfig );
-// signIn  :: Funcion por defecto de NextAuth que nos permite el inicio de session.
-// signOut :: Funcion por defecto de NextAuth que nos permite cerrar session.
-// auth    :: Es el middleware
+export const { signIn, signOut, auth, handlers } = NextAuth( authConfig );
+// signIn   :: Funcion por defecto de NextAuth que nos permite el inicio de session.
+// signOut  :: Funcion por defecto de NextAuth que nos permite cerrar session.
+// auth     :: Es el middleware
+// handlers :: Esto tienen los metodos {GET && POST}, para realizar las peticiones http que el SessionProvider estan buscando.
