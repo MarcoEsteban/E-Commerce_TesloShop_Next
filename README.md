@@ -178,6 +178,13 @@ npm i @types/bcryptjs -D
 ````
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs) - Documentación
 
+### React Hook Form
+Para validar y controlar los cambios en los formularios
+````
+npm i react-hook-form
+````
+- [React Hook Form](https://react-hook-form.com/) - Documentación
+
 ## Prisma 
 - ### Configuracion Paso a Paso: 
 1. Instalamos Prisma ```npm i prisma --save-dev```
