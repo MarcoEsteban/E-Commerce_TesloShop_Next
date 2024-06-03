@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -14,7 +15,7 @@ export const RegisterForm = () => {
   // Usando React Hook Form:
   // register     :: Permite registrar un campo(Input), y obtener sus datos y cambios que se realizan.
   // handleSubmit :: Permite la propagacion del formulario, y evitar que se realice un full refresh.
-  const { register, handleSubmit } = useForm<FormInputs>();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async ( data ) => {
 
@@ -30,24 +31,41 @@ export const RegisterForm = () => {
 
       <label htmlFor="name">Nombre completo</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={
+          clsx(
+            "px-5 py-2 border bg-gray-200 rounded mb-5 focus:outline-none focus:ring-2 focus:ring-blue-500",
+            { 'border-red-500': errors.name },
+          )
+        }
         type="text"
         autoFocus
         { ...register( 'name', { required: true } ) }
       />
+      {/* Mostrando el Error */ }
+      {/* {errors.name && <span className="bg-red-500 p-1 w-full text-white">Este campos es Requerido</span> } */ }
 
       <label htmlFor="email">Correo electrónico</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={
+          clsx(
+            "px-5 py-2 border bg-gray-200 rounded mb-5 focus:outline-none relative focus:ring-1 focus:ring-blue-500",
+            { 'border-red-500': errors.email },
+          )
+        }
         type="email"
         { ...register( 'email', { required: true, pattern: /^\S+@\S+$/i } ) }
       />
 
       <label htmlFor="email">Contraseña</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={
+          clsx(
+            "px-5 py-2 border bg-gray-200 rounded mb-5 focus:outline-none focus:ring-1 focus:ring-blue-500",
+            { 'border-red-500': errors.password }
+          )
+        }
         type="password"
-        { ...register( 'password', { required: true } ) }
+        { ...register( 'password', { required: true, minLength: 8 } ) }
       />
 
       <button
