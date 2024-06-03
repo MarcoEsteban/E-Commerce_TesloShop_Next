@@ -3,6 +3,9 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useState } from 'react';
+
+import { registerUser } from '@/actions';
 
 type FormInputs = {
   name: string;
@@ -12,6 +15,9 @@ type FormInputs = {
 
 export const RegisterForm = () => {
 
+  // React:
+  const [ errorMessage, setErrorMessage ] = useState( '' );
+
   // Usando React Hook Form:
   // register     :: Permite registrar un campo(Input), y obtener sus datos y cambios que se realizan.
   // handleSubmit :: Permite la propagacion del formulario, y evitar que se realice un full refresh.
@@ -19,15 +25,26 @@ export const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async ( data ) => {
 
+    setErrorMessage( '' );
+
     const { name, email, password } = data;
 
-    console.log( { name, email, password } );
     // Server Actions
+    const resp = await registerUser( { name, email, password } );
+
+    if ( !resp.ok ) {
+      setErrorMessage( resp.message );
+      return;
+    }
+
+    console.log( resp );
 
   };
 
   return (
     <form onSubmit={ handleSubmit( onSubmit ) } className="flex flex-col">
+
+      <span className="text-red-500 font-semibold mb-2">{ errorMessage }</span>
 
       <label htmlFor="name">Nombre completo</label>
       <input
@@ -65,7 +82,7 @@ export const RegisterForm = () => {
           )
         }
         type="password"
-        { ...register( 'password', { required: true, minLength: 8 } ) }
+        { ...register( 'password', { required: true, minLength: 6 } ) }
       />
 
       <button
