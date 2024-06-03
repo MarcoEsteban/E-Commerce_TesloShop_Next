@@ -1,24 +1,27 @@
 'use client';
 
-import { authenticate } from '@/actions';
-import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+// import { useRouter } from 'next/navigation';
+
 import { useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { IoInformationOutline } from 'react-icons/io5';
+
+import { authenticate } from '@/actions';
 
 export const LoginForm = () => {
 
   // React - DOM para el Formulario
   // state == undefined :: Indica que el estado inicial es undefined.
   const [ state, dispatch ] = useFormState( authenticate, undefined );
-  const router = useRouter();
+  // const router = useRouter();
 
   useEffect( () => {
     if ( state === 'Success' ) {
       // Redireccionar
-      router.replace( '/' );
+      // router.replace( '/' );
+      window.location.replace( '/' );
     }
 
   }, [ state ] );
